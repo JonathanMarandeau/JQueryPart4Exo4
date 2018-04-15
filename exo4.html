@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <script src="../jquery-3.3.1.min.js"></script>
+    <title>Exercice 4 Partie 4</title>
+  </head>
+  <body>
+    <h1>Vos Informations Personnels</h1>
+    <form>
+      <fieldset id="infoForm">
+        <legend>Veuillez renseigner éléments suivants :</legend>
+        <label for="lastName">NOM : </label><input type="text" name="lastName" id="lastName" placeholder="NOM" /><span id="testLastname"></span><br />
+        <label for="firstName">Prénom : </label><input type="text" name="firstName" id="firstName" placeholder="Prénom" /><span id="testFirstname"></span><br />
+        <label for="birthDate">Date de naissance : </label><input type="text" name="birthDate" id="birthDate" placeholder="ex. 23/05/1979" maxlength="10" /><span id="testBirthdate"></span><br />
+        <label for="birthCity">Lieu de naissance : </label><input type="text" name="birthCity" id="birthCity" placeholder="ex. CAEN" /><span id="testBirthcity"></span><br />
+        <label for="job">Emploi : </label><input type="text" name="job" id="job" placeholder="ex. Livreur de Pizza" /><span id="testJob"></span><br />
+        <label for="company">Société : </label><input type="text" name="company" id="company" placeholder="ex. Pizza Hut" /><span id="testCompany"></span><br />
+        <input type=button id="validForm" value="VALIDER"/>
+      </fieldset>
+    </form>
+    <script>
+    $(function(){ // lancement quand document ready
+    // verification des inputs via un blur
+      $('#lastName').blur(function(){ // controle du lastName
+        var inputLastname = $(this).val();
+        var regLastname = /^[a-zA-Z]+$/; // un crée un pattern
+        var testLastname = regLastname.test(inputLastname); // on test l'objet
+        if (testLastname){
+          $(this).css('color','green'); // mise en couleur de l'input en vert
+          $('#testLastname').html(' <i class="fas fa-check green"></i>'); // icone check
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red'); // mise en couleur de l'input en rouge
+          $('#testLastname').html(' <i class="fas fa-times red"></i>') // icone times
+        }
+      });
+      $('#firstName').blur(function(){ // controle du firstName
+        var inputFirstname = $(this).val();
+        var regFirstname = /^[a-zA-Zàäâéèëâùüû\'-]+$/;
+        var testFirstname = regFirstname.test(inputFirstname);
+        if (testFirstname){
+          $(this).css('color','green');
+          $('#testFirstname').html(' <i class="fas fa-check green"></i>');
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red');
+          $('#testFirstname').html(' <i class="fas fa-times red"></i>');
+        }
+      });
+      $('#birthDate').blur(function(){ // controle du birthDate
+        var inputBirthdate = $(this).val();
+        var regBirthdate = /^(0[1-9]|([1-2][0-9])|3[01])\/(0[1-9]|1[012])\/((19|20)[0-9]{2})$/;
+        var testBirthdate = regBirthdate.test(inputBirthdate);
+        if (testBirthdate){
+          $(this).css('color','green');
+          $('#testBirthdate').html(' <i class="fas fa-check green"></i>');
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red');
+          $('#testBirthdate').html(' <i class="fas fa-times red"></i>');
+        }
+      });
+      $('#birthCity').blur(function(){ // controle du birthCity
+        var inputBirthcity = $(this).val();
+        var regBirthcity = /^[a-zA-Z]+$/;
+        var testBirthcity = regBirthcity.test(inputBirthcity);
+        if (testBirthcity){
+          $(this).css('color','green');
+          $('#testBirthcity').html(' <i class="fas fa-check green"></i>');
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red');
+          $('#testBirthcity').html(' <i class="fas fa-times red"></i>');
+        }
+      });
+      $('#job').blur(function(){ // controle du Job
+        var inputJob = $(this).val();
+        var regJob = /^[ a-zA-Zàäâéèëâùüû\'-]+$/;
+        var testJob = regJob.test(inputJob);
+        if (testJob){
+          $(this).css('color','green');
+          $('#testJob').html(' <i class="fas fa-check green"></i>');
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red');
+          $('#testJob').html(' <i class="fas fa-times red"></i>');
+        }
+      });
+      $('#company').blur(function(){ // controle du company
+        var inputCompany = $(this).val();
+        var regCompany = /^[a-zA-Z\d ]+$/;
+        var testCompany = regCompany.test(inputCompany);
+        if (testCompany){
+          $(this).css('color','green');
+          $('#testCompany').html(' <i class="fas fa-check green"></i>');
+          $(this).attr('valid',"correct");
+        } else {
+          $(this).css('color','red');
+          $('#testCompany').html(' <i class="fas fa-times red"></i>');
+        }
+      });
+      $('#validForm').click(function(){ // fonction au click
+        if ($('#lastName').attr('valid') == 'correct' && $('#firstName').attr('valid') == 'correct' && $('#birthDate').attr('valid') == 'correct' && $('#birthCity').attr('valid') == 'correct' && $('#job').attr('valid') == 'correct' && $('#company').attr('valid') == 'correct'){
+          var biography = '<p>' + $('#firstName').val() + ' ' + $('#lastName').val() + ', né le ' + $('#birthDate').val() + ' à ' + $('#birthCity').val() + ', actuellement ' + $('#job').val() + ' à ' + $('#company').val() + '.</p>';
+          console.log(biography); // petit SPY :)
+          $('#infoForm').append(biography); // on affiche notre MEGA concaténation via text sur la balise p qui était vide
+        } else {
+          alert('Veuillez respecter les consignes');
+        }
+      });
+    });
+    </script>
+  </body>
+  </html>
